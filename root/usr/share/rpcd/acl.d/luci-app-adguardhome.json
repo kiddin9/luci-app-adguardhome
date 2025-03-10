@@ -7,7 +7,7 @@
 					"get_config",
 					"get_status",
 					"get_statistics",
-					"set_passwd",
+					"set_passwd"
 				]
 			},
 			"uci": [
