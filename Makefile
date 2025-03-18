@@ -10,6 +10,6 @@ LUCI_DEPENDS:=+adguardhome +luci-base
 
 PKG_MAINTAINER:=Douglas Orend <doug.orend2@gmail.com>
 
-include ../../luci.mk
+include $(TOPDIR)/feeds/luci/luci.mk
 
 # call BuildPackage - OpenWrt buildroot signature
