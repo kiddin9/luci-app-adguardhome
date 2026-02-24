@@ -128,9 +128,9 @@ start_service() {
 
     # Load configuration
     config_load adguardhome
-    config_get CONFIG_FILE config config "/etc/adguardhome/adguardhome.yaml"
+    config_get CONFIG_FILE config_file config_file "/etc/adguardhome/adguardhome.yaml"
     config_get PID_FILE config pidfile "/run/adguardhome.pid"
-    config_get WORK_DIR config workdir "/var/lib/adguardhome"
+    config_get WORK_DIR config work_dir "/var/lib/adguardhome"
     config_get REDIRECT config redirect "none"
     config_get_bool ENABLED config enabled 0
     
@@ -178,7 +178,7 @@ stop_service() {
 
     # Load configuration
     config_load adguardhome
-    config_get CONFIG_FILE config config "/etc/adguardhome/adguardhome.yaml"
+    config_get CONFIG_FILE config_file config_file "/etc/adguardhome/adguardhome.yaml"
     
     # Get ports configuration
     AdGuardHome_PORT=$(awk '/dns:/{f=1} f&&/port:/{split($0,a,": *");print a[2];exit}' "$CONFIG_FILE")
