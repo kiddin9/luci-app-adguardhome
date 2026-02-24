@@ -5,6 +5,9 @@ START=19
 # Stop before network stops
 STOP=89
 
+PROG=/usr/bin/AdGuardHome
+USE_PROCD=1
+
 boot() {
 	ADGUARDHOME_BOOT=1
 	start "$@"
