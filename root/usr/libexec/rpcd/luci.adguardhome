@@ -30,8 +30,8 @@ parse_yaml() {
 	}'
 }
 read_config() {
-	if [ -f /etc/adguardhome/adguardhome.yaml ]; then
-		parse_yaml /etc/adguardhome/adguardhome.yaml
+	if [ -f /etc/AdGuardHome/AdGuardHome.yaml ]; then
+		parse_yaml /etc/AdGuardHome/AdGuardHome.yaml
 	elif [ -f /etc/adguardhome/adguardhome.yaml ]; then
 		parse_yaml /etc/adguardhome/adguardhome.yaml
 	fi
