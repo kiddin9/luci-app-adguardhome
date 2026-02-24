@@ -30,10 +30,10 @@ parse_yaml() {
 	}'
 }
 read_config() {
-	if [ -f /etc/AdGuardHome.yaml ]; then
-		parse_yaml /etc/AdGuardHome.yaml
-	elif [ -f /etc/adguardhome.yaml ]; then
-		parse_yaml /etc/adguardhome.yaml
+	if [ -f /etc/adguardhome/adguardhome.yaml ]; then
+		parse_yaml /etc/adguardhome/adguardhome.yaml
+	elif [ -f /etc/adguardhome/adguardhome.yaml ]; then
+		parse_yaml /etc/adguardhome/adguardhome.yaml
 	fi
 }
 
@@ -140,9 +140,9 @@ case "$1" in
 				json_get_var AGH_HASH "hash"
 				check_if_empty "hash parameter missing." "${AGH_HASH}" || exit 1
 				# Change the username in the AGH configuration file:
-				sed -i "s|\- name: .*|\- name: ${AGH_USER} |" /etc/adguardhome.yaml
+				sed -i "s|\- name: .*|\- name: ${AGH_USER} |" /etc/adguardhome/adguardhome.yaml
 				# Calculate and replace password hash in the AGH configuration file:
-				sed -i "s|\password: .*|\password: ${AGH_HASH}|" /etc/adguardhome.yaml
+				sed -i "s|\password: .*|\password: ${AGH_HASH}|" /etc/adguardhome/adguardhome.yaml
 				# Restart AdGaurdHome:
 				service adguardhome restart
 				# Return success to caller:  

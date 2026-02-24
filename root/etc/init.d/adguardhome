@@ -1,19 +1,13 @@
 #!/bin/sh /etc/rc.common
 
-USE_PROCD=1
-
-# Program path
-PROG=/usr/bin/AdGuardHome
-
 # Start after network (19 matches dnsmasq)
 START=19
 # Stop before network stops
 STOP=89
 
-# Handle boot process
 boot() {
-    adguardhome_boot=1
-    start "$@"
+	ADGUARDHOME_BOOT=1
+	start "$@"
 }
 
 # Configure DNS to use port 53
@@ -124,12 +118,14 @@ start_service() {
     local dnsmasq_port
     local DNSMASQ_SERVER
     
-    # Skip if during boot
-    [ -n "$adguardhome_boot" ] && return 0
+    if [ -n "$ADGUARDHOME_BOOT" ]; then
+		# Do not start yet, wait for triggers
+		return 0
+	fi
 
     # Load configuration
     config_load adguardhome
-    config_get CONFIG_FILE config config "/etc/adguardhome.yaml"
+    config_get CONFIG_FILE config config "/etc/adguardhome/adguardhome.yaml"
     config_get PID_FILE config pidfile "/run/adguardhome.pid"
     config_get WORK_DIR config workdir "/var/lib/adguardhome"
     config_get REDIRECT config redirect "none"
@@ -175,11 +171,11 @@ stop_service() {
     local DNSMASQ_SERVER
     
     # Skip if during boot
-    [ -n "$adguardhome_boot" ] && return 0
+    [ -n "$ADGUARDHOME_BOOT" ] && return 0
 
     # Load configuration
     config_load adguardhome
-    config_get CONFIG_FILE config config "/etc/adguardhome.yaml"
+    config_get CONFIG_FILE config config "/etc/adguardhome/adguardhome.yaml"
     
     # Get ports configuration
     AdGuardHome_PORT=$(awk '/dns:/{f=1} f&&/port:/{split($0,a,": *");print a[2];exit}' "$CONFIG_FILE")
@@ -202,7 +198,7 @@ service_triggers() {
     procd_add_reload_trigger "adguardhome"
     
     # Add interface trigger during boot
-    if [ -n "$adguardhome_boot" ]; then
+    if [ -n "$ADGUARDHOME_BOOT" ]; then
         # Wait for interfaces to be up before starting AdGuard Home
         # Prevents issues like https://github.com/openwrt/packages/issues/21868
         procd_add_raw_trigger "interface.*.up" 5000 /etc/init.d/adguardhome restart
