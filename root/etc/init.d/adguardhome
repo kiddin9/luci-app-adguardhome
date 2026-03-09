@@ -176,7 +176,7 @@ start_service() {
     local DNSMASQ_SERVER=$(uci -q get dhcp.@dnsmasq[0].server)
 
     # Configure redirect mode
-    case "$REDIRECT" in
+    case "$redirect" in
         "redirect")
             set_redirect "$AdGuardHome_PORT"
             ;;
