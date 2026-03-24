@@ -9,6 +9,8 @@ const DEFAULT_WORK_DIR = '/var/lib/adguardhome';
 const DEFAULT_USER = 'adguardhome';
 const DEFAULT_GROUP = DEFAULT_USER;
 
+const PATH_REGEX = new RegExp('^/etc(/[^/]+)?/?$');
+
 function validateConfigFile(_unused, value) {
 	if (value == null || value === '') {
 		return true;
