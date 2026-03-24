@@ -100,13 +100,21 @@ return view.extend({
 
 		o = s.option(form.Value, 'config_file', _('Configuration file'));
 		o.datatype = 'string';
-		o.default = DEFAULT_CONFIG_FILE;
+		o.placeholder = DEFAULT_CONFIG_FILE;
 		o.validate = validateConfigFile;
 
 		o = s.option(form.Value, 'work_dir', _('Work Dir'));
 		o.datatype = 'string';
-		o.default = DEFAULT_WORK_DIR;
+		o.placeholder = DEFAULT_WORK_DIR;
 		o.validate = validateWorkDir;
+
+		o = s.option(form.Value, 'user', _('Service user'), _('User the service runs under.'));
+		o.datatype = 'string';
+		o.placeholder = DEFAULT_USER;
+
+		o = s.option(form.Value, 'group', _('Service group'), _('Group the service runs under.'));
+		o.datatype = 'string';
+		o.placeholder = DEFAULT_GROUP;
 
 		// 添加重定向模式选择
 		o = s.option(form.ListValue, 'redirect', _('Redirect'), _('AdGuardHome redirect mode'));
